@@ -1,11 +1,11 @@
 package com.tracker.tasktracker.command;
 
+import com.tracker.tasktracker.annotation.ShellComponent;
 import com.tracker.tasktracker.service.TaskService;
 import org.springframework.shell.core.command.annotation.Command;
 import org.springframework.shell.core.command.annotation.Option;
-import org.springframework.stereotype.Component;
 
-@Component
+@ShellComponent
 public class TaskCommands {
 
     private final TaskService service;
