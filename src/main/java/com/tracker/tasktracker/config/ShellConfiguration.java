@@ -1,8 +1,9 @@
 package com.tracker.tasktracker.config;
 
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.shell.core.ShellRunner;
 import org.springframework.shell.core.command.CommandContext;
 import org.springframework.shell.core.command.CommandExecutor;
 import org.springframework.shell.core.command.CommandNotFoundException;
@@ -18,8 +19,9 @@ import java.io.PrintWriter;
 @Configuration
 public class ShellConfiguration {
 
-    @Bean(name = "springShellApplicationRunner")
-    public ApplicationRunner springShellApplicationRunner(CommandRegistry commandRegistry, CommandParser commandParser) {
+    @Bean
+    @Primary
+    public ShellRunner interactiveShellRunner(CommandRegistry commandRegistry, CommandParser commandParser) {
         return args -> {
             CommandExecutor executor = new CommandExecutor(commandRegistry);
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -44,7 +46,7 @@ public class ShellConfiguration {
                 try {
                     parsedInput = commandParser.parse(input);
                 } catch (Exception e) {
-                    writer.println("Error parsing command: " + e.getMessage());
+                    writer.println("Error: " + e.getMessage());
                     continue;
                 }
 
